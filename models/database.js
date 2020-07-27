@@ -1,8 +1,10 @@
+'use strict'
+
 require('dotenv').config()
 
 var mongodb = require('mongodb')
 var MongoClient = mongodb.MongoClient;
-var url = 'mongodb+srv://yuvraj192:div21902@sms.pni8a.mongodb.net/SMS?retryWrites=true&w=majority';
+var url = process.env.MONGO_URI;
 let connection = null;
 
 var dataCamp;
@@ -10,7 +12,8 @@ var dataCamp;
 module.exports.connect = () => new Promise((resolve, reject) => {
     try {
         MongoClient.connect(url, {
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useNewUrlParser:true
         }, function (err, db) {
             if (err) {
                 reject(err);
