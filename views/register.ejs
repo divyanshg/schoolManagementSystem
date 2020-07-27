@@ -1,0 +1,31 @@
+<%- include ('./header') %>
+<section class="text-gray-700 body-font mt-24">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+        <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
+            <h1 class="title-font font-medium text-3xl text-gray-900">Slow-carb next level shoindcgoitch ethical
+                authentic, poko scenester</h1>
+            <p class="leading-relaxed mt-4">Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock
+                starladder roathse. Craies vegan tousled etsy austin.</p>
+        </div>
+        <form action="/register" method="POST"
+            class="text-center lg:w-2/6 md:w-1/2 bg-white shadow-lg rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+            <h2 class="text-gray-900 text-lg font-medium title-font mb-5 mx-auto w-full">Sign Up</h2>
+            <% if(typeof er_msg != 'undefined') { %>
+                <div class="p-2 mb-4 rounded-lg bg-red-200 border border-red-500"> <%= er_msg %> </div>
+             <% } %>
+            <input name="name" id="name"
+                class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
+                placeholder="Full Name" type="text">
+            <input name="email" id="email"
+                class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
+                placeholder="Email" type="email">
+            <input name="pass" id="pass"
+                class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
+                placeholder="Password" type="password">
+            <button type="submit"
+                class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Sign Up</button>
+            <p class="text-xs text-gray-500 mt-3">Already have an account? <a href="/login" class="text-green-500 font-bold">Sign In</a>.</p>
+        </form>
+    </div>
+</section>
+<%- include ('./footer') %>

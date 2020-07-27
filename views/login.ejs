@@ -1,0 +1,31 @@
+<%- include ('./header') %>
+
+<section class="text-gray-700 body-font mt-24 items-center content-center">
+    <div class="container px-5 py-24 mx-auto w-full flex flex-wrap items-center content-center">
+        <form action="/login" method="POST"
+            class="lg:w-2/6 md:w-1/2 bg-white shadow-lg rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 text-center">
+            <h2 class="text-gray-900 text-lg font-medium title-font mb-5 mx-auto w-full">Sign In</h2>
+            
+            <% if(messages.error) { %>
+               <div class="p-2 mb-4 rounded-lg bg-red-200 border border-red-500"> <%= messages.error %> </div>
+            <% } %>
+
+            <% if(typeof su_msg != 'undefined') { %>
+                <div class="p-2 mb-4 rounded-lg bg-green-200 border border-green-500"> <%= su_msg %> </div>
+             <% } %>
+
+            <input name="email" id="email"
+                class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
+                placeholder="Email" type="email">
+            <input name="pass" id="pass"
+                class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
+                placeholder="Password" type="password">
+            <button type="submit"
+                class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Sign
+                In</button>
+            <p class="text-xs text-gray-500 mt-3">Don't have an account? <a href="/register"
+                    class="text-green-500 font-bold">Sign Up</a>.</p>
+        </form>
+    </div>
+</section>
+<%- include ('./footer') %>
