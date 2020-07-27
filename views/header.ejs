@@ -3,6 +3,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="icon" href="http://iotine.zapto.org/IOTINE/IOTINE_OLD/logo.png" type="image/icon type">
 <style>
+    body{
+        background-color:white !important;
+    }
     .dropdown {
         position: relative;
         display: inline-block;
@@ -58,13 +61,14 @@
         cursor:pointer
     }
     .main{
+        background-color: #f0f1f3;
         width:calc(100% - 250px);
         margin-left:auto;
         height:auto;
     }
 </style>
 
-<header class="text-gray-700 body-font">
+<header class="text-gray-700 body-font shadow-2xl">
     <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -96,9 +100,9 @@
 
 <div class="sideNav bg-gray-900 pt-24 px-8 text-white text-lg">
     <ul>
-        <li class="navItem hover:bg-gray-800 p-3">Dashboard</li>
-        <li class="navItem hover:bg-gray-800 p-3">Students</li>
-        <li class="navItem hover:bg-gray-800 p-3">Teachers</li>
+        <li class="navItem hover:bg-gray-800 p-2">Dashboard</li>
+        <li class="navItem hover:bg-gray-800 p-2">Students</li>
+        <li class="navItem hover:bg-gray-800 p-2">Teachers</li>
     </ul>
 
 </div>
