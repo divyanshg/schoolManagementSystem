@@ -55,9 +55,6 @@ async function save_user(req, res) {
         _uid: 'irn:cb:iam::' + ruid(),
         name: btoa(req.body.name),
         email: btoa(req.body.email),
-        details: {
-            type: btoa(req.body.type)
-        },
         password: hashedPass
 
     }, (err, resp) => {
