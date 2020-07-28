@@ -1,25 +1,26 @@
-
 <style>
-    .sideNav{
+    .sideNav {
         position: fixed;
-        top:0px;
-        left:0px;
-        height:100%;
-        width:250px;
-        z-index:0
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 250px;
+        z-index: 0
     }
-    .navItem{
-        cursor:pointer
+
+    .navItem {
+        cursor: pointer
     }
-    .main{
+
+    .main {
         background-color: #f0f1f3;
-        width:calc(100% - 250px);
-        margin-left:auto;
-        height:auto;
+        width: calc(100% - 250px);
+        margin-left: auto;
+        height: auto;
     }
 </style>
 
-<header class="text-gray-700 body-font shadow-2xl">
+<header class="text-gray-700 body-font shadow-lg border-b z-10">
     <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -36,24 +37,39 @@
             <a class="mr-5 hover:text-gray-900">Fourth Link</a>
         </nav>
         <button
-            class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded-full text-base mt-4 md:mt-0 h-10 w-10">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"
+            onclick="$('.dropDown').toggle()"><%- name %>
+            <svg class="-mr-1 ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
             </svg>
         </button>
     </div>
 </header>
 
-<!-- 
-     SideNav
--->
-
-<div class="sideNav bg-gray-900 pt-24 px-8 text-white text-lg">
-    <ul>
-        <li class="navItem hover:bg-gray-800 p-2">Dashboard</li>
-        <li class="navItem hover:bg-gray-800 p-2">Students</li>
-        <li class="navItem hover:bg-gray-800 p-2">Teachers</li>
-    </ul>
-
+<div class="origin-top-right absolute right-0 -mt-3 w-56 rounded-md shadow-lg mr-3">
+    <div class="dropDown rounded-md bg-white shadow-xs w-full" style="display: none;">
+        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+            <a href="#"
+                class="block px-4 py-2 text-sm leading-5 text-gray-700 disabled focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                role="menuitem"><%- email %></a>
+            <div class="border-t border-gray-100"></div>
+            <a href="#"
+                class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                role="menuitem">My Account</a>
+            <a href="#"
+                class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                role="menuitem">Settings</a>
+            <div class="border-t border-gray-100"></div>
+            <form action="/logout?_method=DELETE" method="POST">
+                <button type="submit"
+                    class="block w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                    role="menuitem">
+                    Sign out
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
