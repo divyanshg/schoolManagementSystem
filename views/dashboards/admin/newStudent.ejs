@@ -6,7 +6,19 @@
     .bg-gray-200 {
         background-color: #f7f7f7 !important;
     }
+
+    .message {
+        width: 200px;
+        float: right;
+        position: absolute;
+        right: 10px;
+        top: 100px;
+    }
 </style>
+
+<% if(typeof message != "undefined") { %>
+<div class="z-10 bg-green-300 text-green-900 message rounded-lg shadow-lg border border-green-500 p-5"><%= message %></div>
+<% } %>
 
 <div class="main bg-gray-200 p-5 overflow-x-hidden">
     <h1 class="text-xl font-medium">Students</h1>
@@ -60,7 +72,7 @@
 
             <div class="row w-full flex mb-4">
 
-                
+
                 <div class="detail flex flex-col mr-5">
                     <label for="mothersName" class="mb-3">Mothers Name *</label>
                     <input type="text" name="mothersName" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
@@ -90,7 +102,8 @@
 
                 <div class="detail flex flex-col mr-5">
                     <label for="phoneNumber" class="mb-3">Phone *</label>
-                    <input type="tel" name="phoneNumber" maxlength="10" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                    <input type="tel" name="phoneNumber" maxlength="10"
+                        class="px-3 py-2 rounded border bg-gray-200 w-64" required>
                 </div>
 
             </div>

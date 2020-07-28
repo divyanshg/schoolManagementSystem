@@ -32,11 +32,6 @@
 
         <div class="row w-full flex">
             <div class="widget w-1/4">
-                <h1 class="float-right text-gray-600">Students</h1>
-                <br>
-                <h1 class="float-right text-black text-2xl">16,464</h1>
-            </div>
-            <div class="widget w-1/4">
                 <h1 class="float-right text-gray-600">Parents</h1>
             </div>
             <div class="widget w-1/4">
@@ -44,6 +39,11 @@
             </div>
             <div class="widget w-1/4">
                 <h1 class="float-right text-gray-600">Random</h1>
+            </div>
+            <div class="widget w-1/4">
+                <h1 class="float-right text-gray-600">Students</h1>
+                <br>
+                <h1 class="float-right text-black text-2xl"><%= studentsTotal.female + studentsTotal.male %></h1>
             </div>
         </div>
 
@@ -59,6 +59,8 @@
             </div>
             <div class="widget w-1/3">
                 <h1 class="text-xl font-bold float-left mb-2">Students</h1>
+                <p id="ftotal" style="display: none;"><%= studentsTotal.female %></p>
+                <p id="mtotal" style="display: none;"><%= studentsTotal.male %></p>
                 <canvas id="piechart" width="340" height="100"></canvas>
             </div>
         </div>
@@ -144,7 +146,7 @@
     data: {
         labels: ["Female",	"Male"],
         datasets: [{    
-            data: [2424, 14040], // Specify the data values array
+            data: [parseInt(document.querySelector("#ftotal").innerHTML), parseInt(document.querySelector("#mtotal").innerHTML)], // Specify the data values array
           
             borderColor: ['rgba(0, 0, 255 , 1)', 'rgba(255, 206, 86, 1)'], // Add custom color border 
             backgroundColor: ['rgba(0, 0, 255 , 1)', 'rgba(255, 206, 86, 1)'], // Add custom color background (Points and Fill)

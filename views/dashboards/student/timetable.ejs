@@ -3,45 +3,61 @@
 <%- include('./sidenav') %>
 
 <style>
-    th {
-
-        border: 1px solid #e6e6e6;
-        padding: 1rem 2rem 1rem 2rem;
+    .widget {
+        background-color: white;
+        max-width: 775px;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
     }
 
+    table,
+    th,
     td {
-        border: 1px solid #e6e6e6;
-        padding: 1rem 2rem 1rem 2rem;
+        border: 1px solid black;
+        border-collapse: collapse;
         text-align: center;
     }
 
-    tr:hover {
-        background-color: #f9f9f9;
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
     }
 </style>
 
-
-<div class="main bg-gray-200 p-5 overflow-x-hidden">
-    <h1 class="text-xl font-medium">Students</h1>
+<div class="main bg-gray-200 p-5 h-full overflow-hidden">
+    <h1 class="text-xl font-medium">Time Table</h1>
     <nav class="bg-grey-light p-3 pl-0 text-sm rounded text-gray-600 font-sans w-full">
         <ol class="list-reset flex text-grey-dark">
             <li><a href="#" class="text-blue font-bold">Home</a></li>
             <li><span class="mx-2">></span></li>
-            <li><a href="#" class="text-blue font-bold">students</a></li>
+            <li><a href="#" class="text-blue font-bold">Classes</a></li>
             <li><span class="mx-2">></span></li>
-            <li><a href="#" class="text-blue font-bold text-orange-500">All students</a></li>
+            <li><a href="#" class="text-blue font-bold text-orange-500">Time Table</a></li>
         </ol>
     </nav>
-    <p class="data" style="display: none;"><%- JSON.stringify(users) %></p>
-    <input type="text" id="searchInput" onkeyup="searchTable()" class="p-2 rounded my-4 float-right w-1/5"
-        placeholder="Search using admission number">
-    <table align="center" id="table" border="1" class="table-auto w-full bg-white">
-    </table>
 
+    <div class="widgetsContainer p-5 overflow-x-hidden h-full">
+        <div class="row w-full flex">
+            <div class="widget w-1/2">
+                <h1 class="text-xl font-bold float-left mb-2">Classes</h1>
+                <p class="data" style="display: none;"><%- JSON.stringify(classes) %></p>
+                <div class="mt-5 h-full float-left -ml-10 overflow-auto">
+                    <input type="text" id="searchInput" onkeyup="searchTable()" class="p-2 rounded my-4 w-4/5"
+                        placeholder="Search using class name">
+                    <table id="classes" class="display overflow-auto" style="max-height: 640px !important;"
+                        cellspacing="0">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    constructTable(JSON.parse($('.data').html()), '#table')
+    
+    constructTable(JSON.parse($('.data').html()), '#classes')
 
     function constructTable(list, selector) {
         $(selector).html("")
@@ -57,13 +73,12 @@
                 // If there is any key, which is matching 
                 // with the column name 
                 if (val == null) val = "";
-                row.append($('<td/>').html(atob(val)));
+                row.append($('<td/>').html(val));
             }
 
             // Adding each row to the table 
             $(selector).append(row);
         }
-
     }
 
     function Headers(list, selector) {
@@ -93,7 +108,7 @@
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("searchInput");
         filter = input.value.toUpperCase();
-        table = document.getElementById("table");
+        table = document.getElementById("classes");
         tr = table.getElementsByTagName("tr");
 
         // Loop through all table rows, and hide those who don't match the search query

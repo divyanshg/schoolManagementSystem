@@ -11,6 +11,8 @@ dataCamp.connect()
     .catch(e => console.log(e))
 
 var accountType = require('../models/accountType')
+var classes = require('../models/classes')
+var students = require('../models/students')
 
 //Main Route
 
@@ -19,11 +21,7 @@ router.get('/', checkAuthorized, async (req, res) => {
     var u = await req.user
 
     await accountType.get(u.email).then((type) => {
-            res.render(`dashboards/${type}/index.ejs`, {
-                name: atob(u.name),
-                email: atob(u.email),
-                details: u
-            })
+            res.redirect(`/console/${type}`)
         })
         .catch((e) => {
             console.log(e)
@@ -38,12 +36,19 @@ router.get('/admin', checkAuthorized, async (req, res) => {
     var u = await req.user
     accountType.check('admin', u.email)
         .then(() => {
-            res.render('dashboards/admin/index.ejs', {
-                _uid: u._uid,
-                name: atob(u.name),
-                email: atob(u.email),
-                details: u
-            })
+            students.count(u.school)
+                .then(studentsTotal => {
+                    res.render('dashboards/admin/index.ejs', {
+                        _uid: u._uid,
+                        name: atob(u.name),
+                        email: atob(u.email),
+                        details: u,
+                        studentsTotal
+                    })
+                })
+                .catch(e => {
+                    res.sendStatus(500)
+                })
         }).catch(e => {
             res.status(404).send("The page you were looking for is not found!")
         })
@@ -64,7 +69,8 @@ router.get('/admin/students', checkAuthorized, async (req, res) => {
                     _uid: 0,
                     password: 0,
                     type: 0,
-                    school: 0
+                    school: 0,
+                    roll: 0
                 }
             }).toArray(async (err, students) => {
                 if (err) res.sendStatus(500)
@@ -122,7 +128,8 @@ router.get('/admin/student/new', checkAuthorized, async (req, res) => {
             res.render('dashboards/admin/newStudent.ejs', {
                 name: atob(u.name),
                 email: atob(u.email),
-                details: u
+                details: u,
+                message: undefined
             })
         })
         .catch(e => {
@@ -170,7 +177,7 @@ router.post('/admin/student/new', checkAuthorized, async (req, res) => {
                 email: btoa(req.body.email),
                 phone: btoa(req.body.phoneNumber),
                 type: btoa("student"),
-                school:u.school,
+                school: u.school,
                 password: hashedPass
             }, (err, response) => {
                 if (err) res.sendStatus(500)
@@ -178,7 +185,8 @@ router.post('/admin/student/new', checkAuthorized, async (req, res) => {
                 res.render('dashboards/admin/newStudent.ejs', {
                     name: atob(u.name),
                     email: atob(u.email),
-                    details: u
+                    details: u,
+                    message: `${req.body.firstName} ${req.body.lastName} was added successfully`
                 })
             })
         })
@@ -206,7 +214,7 @@ router.post('/admin/teacher/new', checkAuthorized, async (req, res) => {
                 email: btoa(req.body.email),
                 phone: btoa(req.body.phoneNumber),
                 type: btoa("teacher"),
-                school:u.school,
+                school: u.school,
                 password: hashedPass
             }, (err, response) => {
                 if (err) res.sendStatus(500)
@@ -231,12 +239,67 @@ router.get('/teacher', checkAuthorized, async (req, res) => {
     var u = await req.user
     accountType.check('teacher', u.email)
         .then(() => {
-            res.render('index.ejs', {
-                _uid: u._uid,
-                name: atob(u.name),
-                email: atob(u.email),
-                details: u
-            })
+            classes.get(u.teacherId, u.school)
+                .then(classes => {
+                    students.count(u.school)
+                        .then(studentsTotal => {
+                            res.render('dashboards/teacher/index.ejs', {
+                                _uid: u._uid,
+                                name: atob(u.name),
+                                email: atob(u.email),
+                                details: u,
+                                classes,
+                                studentsTotal
+                            })
+                        })
+                }).catch(e => {
+                    res.sendStatus(500)
+                })
+                .catch(e => {
+                    res.sendStatus(500)
+                })
+        })
+        .catch(e => {
+            res.status(404).send("The page you were looking for is not found!")
+        })
+})
+
+router.get('/teacher/class/new', checkAuthorized, async (req, res) => {
+    var u = await req.user
+    accountType.check('teacher', u.email)
+        .then(() => {
+            classes.get(u.teacherId, u.school)
+                .then(classes => {
+                    res.render('dashboards/teacher/newClass.ejs', {
+                        _uid: u._uid,
+                        name: atob(u.name),
+                        email: atob(u.email),
+                        details: u,
+                        classes
+                    })
+                })
+                .catch(e => {
+                    console.log(e)
+                    res.sendStatus(500)
+                })
+        })
+        .catch(e => {
+            res.status(404).send("The page you were looking for is not found!")
+        })
+})
+
+router.post('/teacher/class/new', checkAuthorized, async (req, res) => {
+
+    var u = await req.user
+    accountType.check('teacher', u.email)
+        .then(() => {
+            classes.addNew(req.body, u.teacherId, u.school)
+                .then(resp => {
+                    res.redirect('/console/teacher/class/new')
+                })
+                .catch(e => {
+                    res.sendStatus(500)
+                })
         })
         .catch(e => {
             res.status(404).send("The page you were looking for is not found!")
@@ -249,7 +312,7 @@ router.get('/student', checkAuthorized, async (req, res) => {
     var u = await req.user
     accountType.check('student', u.email)
         .then(() => {
-            res.render('index.ejs', {
+            res.render('dashboards/student/index.ejs', {
                 _uid: u._uid,
                 name: atob(u.name),
                 email: atob(u.email),
@@ -260,6 +323,32 @@ router.get('/student', checkAuthorized, async (req, res) => {
             res.status(404).send("The page you were looking for is not found!")
         })
 })
+
+router.get('/student/timetable', checkAuthorized, async (req, res) => {
+    var u = await req.user
+    accountType.check('student', u.email)
+        .then(() => {
+            classes.getByClass(u.class, u.school, u.section)
+                .then(classes => {
+
+                    res.render('dashboards/student/timetable.ejs', {
+                        _uid: u._uid,
+                        name: atob(u.name),
+                        email: atob(u.email),
+                        details: u,
+                        classes
+                    })
+                })
+                .catch(e => {
+                    res.sendStatus(500)
+                })
+        })
+        .catch(e => {
+            res.status(404).send("The page you were looking for is not found!")
+        })
+})
+
+//Random uid Generator
 
 let ruid = () => {
     let s4 = () => {
