@@ -1,0 +1,94 @@
+<%- include('../../header') %>
+<%- include('../dashHeaders') %>
+<%- include('./sidenav') %>
+
+<style>
+    .bg-gray-200 {
+        background-color: #f7f7f7 !important;
+    }
+</style>
+
+<div class="main bg-gray-200 p-5 overflow-x-hidden">
+    <h1 class="text-xl font-medium">Teachers</h1>
+    <nav class="bg-grey-light p-3 pl-0 text-sm rounded text-gray-600 font-sans w-full mb-2">
+        <ol class="list-reset flex text-grey-dark">
+            <li><a href="#" class="text-blue font-bold">Home</a></li>
+            <li><span class="mx-2">></span></li>
+            <li><a href="#" class="text-blue font-bold">students</a></li>
+            <li><span class="mx-2">></span></li>
+            <li><a href="#" class="text-blue font-bold text-orange-500">New Teacher</a></li>
+        </ol>
+    </nav>
+    <div class="registration-div w-full bg-white rounded-lg p-10 h-auto">
+        <h2 class="text-xl font-medium mb-5">
+            Add New Teachers
+        </h2>
+        <form method="POST" action="/console/admin/teacher/new" class="w-full h-auto">
+            <div class="row flex w-full mb-4">
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="firstName" class="mb-3">First Name *</label>
+                    <input type="text" name="firstName" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                </div>
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="lastName" class="mb-3">Last Name *</label>
+                    <input type="text" name="lastName" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                </div>
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="gender" class="mb-3">Gender *</label>
+                    <select name="gender" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                        <option value="null">Please Select gender *</option>
+                        <option value="male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="roll" class="mb-3">Teacher ID *</label>
+                    <input type="text" name="teacherId" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                </div>
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="religion" class="mb-3">Religion *</label>
+                    <select name="religion" class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                        <option value="null">Please Select Religion *</option>
+                        <option value="HINDU">Hindu</option>
+                        <option value="CHRISTIAN">Christian</option>
+                        <option value="BUDDHISH">Buddhish</option>
+                        <option value="ISLAM">Islam</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+
+            </div>
+
+            <div class="row w-full flex mb-4">
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="email" class="mb-3">E-Mail</label>
+                    <input type="email" name="email" class="px-3 py-2 rounded border bg-gray-200 w-64">
+                </div>
+
+                <div class="detail flex flex-col mr-5">
+                    <label for="phoneNumber" class="mb-3">Phone *</label>
+                    <input type="tel" name="phoneNumber" maxlength="10"
+                        class="px-3 py-2 rounded border bg-gray-200 w-64" required>
+                </div>
+
+            </div>
+
+
+            <div class="row w-full flex mt-10">
+
+                <button class="bg-orange-400 p-3 rounded text-white w-48 mr-5">Save</button>
+                <button class="bg-blue-400 p-3 rounded text-white w-48">Reset</button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

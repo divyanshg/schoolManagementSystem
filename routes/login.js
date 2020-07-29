@@ -5,7 +5,7 @@ module.exports = {
         res.render('login.ejs')
     },
     authenticate: passport.authenticate('local', {
-        successRedirect: '/console/admin',
+        successRedirect: '/console',
         failureRedirect: '/login',
         failureFlash: true
     })

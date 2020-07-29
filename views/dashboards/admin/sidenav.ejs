@@ -1,0 +1,35 @@
+
+<!-- 
+     SideNav
+-->
+
+<div class="sideNav bg-gray-900 pt-24 px-8 text-white text-lg">
+    <ul>
+        <li class="navItem hover:bg-gray-800 p-2"><a href="/console">Dashboard</a></li>
+        <li class="navItem hover:bg-gray-800 p-2" onclick="toggleNest('.student-nest')">
+            Students
+        </li>
+        <ul class="ml-3 m-2 student-nest" style="display: none;">
+            <li class="navItem hover:bg-gray-800 p-2"><span class="mx-2">></span><a href="/console/admin/students">All
+                    Students</a></li>
+            <li class="navItem hover:bg-gray-800 p-2"><span class="mx-2">></span>Student details</li>
+            <li class="navItem hover:bg-gray-800 p-2"><span class="mx-2">></span><a href="/console/admin/student/new">New
+                Students</a></li>
+        </ul>
+        <li class="navItem hover:bg-gray-800 p-2" onclick="toggleNest('.teacher-nest')">Teachers</li>
+        <ul class="ml-3 m-2 teacher-nest" style="display: none;">
+            <li class="navItem hover:bg-gray-800 p-2"><span class="mx-2">></span><a href="/console/admin/teachers">All
+                    Teachers</a></li>
+            <li class="navItem hover:bg-gray-800 p-2"><span class="mx-2">></span>Teacher details</li>
+            <li class="navItem hover:bg-gray-800 p-2"><span class="mx-2">></span><a href="/console/admin/teacher/new">New
+                Teacher</a></li>
+        </ul>
+    </ul>
+
+</div>
+
+<script>
+    function toggleNest(nest) {
+        $(nest).toggle()
+    }
+</script>
