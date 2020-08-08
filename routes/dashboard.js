@@ -233,6 +233,31 @@ router.post('/admin/teacher/new', checkAuthorized, async (req, res) => {
 
 })
 
+router.get('/admin/classes', checkAuthorized, async (req, res) => {
+
+    var u = await req.user
+
+    accountType.check('admin', u.email)
+        .then(() => {
+            classes.getForAdmin(u.school)
+            .then(classes => {
+                res.render('dashboards/admin/allClasses.ejs', {
+                    name: atob(u.name),
+                    email: atob(u.email),
+                    details: u,
+                    classes
+                })
+            })
+            .catch(e => {
+                res.sendStatus(500)
+            })
+        })
+        .catch(e => {
+            res.sendStatus(404)
+        })
+
+})
+
 //Teacher Routes
 
 router.get('/teacher', checkAuthorized, async (req, res) => {

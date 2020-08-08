@@ -56,6 +56,8 @@ app.delete('/logout', (req, res) => { req.logOut(); res.redirect('/login') })
 
 //HomePage Routes
 
-app.get('/', (req, res) => { res.render("accountTypeSelector") })
+app.get('/', (req, res) => { res.render("accountTypeSelector.ejs") })
 
 app.listen(3000)
+
+//Chalo ayodhya chale dikhane....jalwa hindu power ka x2...tel lagalo dabaur ka...naam mitta do babur ka x2

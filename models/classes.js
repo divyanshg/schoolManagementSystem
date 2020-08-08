@@ -67,6 +67,25 @@ var classs = {
                 resolve(classes)
             })
         })
+    },
+    getForAdmin: (school) => {
+        return new Promise((resolve, reject) => {
+            dataCamp.find({
+                school
+            }, {
+                projection: {
+                    _id: 0,
+                    teacherId: 0,
+                    link: 0,
+                    school: 0,
+                    endTime: 0
+                }
+            }).toArray((err, classes) => {
+                if (err) reject(err)
+
+                resolve(classes)
+            })
+        })
     }
 }
 

@@ -1,0 +1,125 @@
+<%- include('../../header') %>
+<%- include('../dashHeaders') %>
+<%- include('./sidenav') %>
+
+<style>
+    .widget {
+        background-color: white;
+        max-width: 775px;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+    }
+</style>
+
+
+<div class="main bg-gray-200 p-5 h-full overflow-hidden">
+    <h1 class="text-xl font-medium">Admin Dashboard</h1>
+    <nav class="bg-grey-light p-3 pl-0 text-sm rounded text-gray-600 font-sans w-full">
+        <ol class="list-reset flex text-grey-dark">
+            <li><a href="#" class="text-blue font-bold">Home</a></li>
+            <li><span class="mx-2">></span></li>
+            <li><a href="#" class="text-blue font-bold">Classes</a></li>
+            <li><span class="mx-2">></span></li>
+            <li><a href="#" class="text-blue font-bold text-orange-500">All Classes</a></li>
+        </ol>
+    </nav>
+
+    <div class="widgetsContainer p-5 overflow-x-hidden h-full">
+        <div class="row w-full flex">
+            <div class="widget w-4/5">
+                <h1 class="text-xl font-bold float-left mb-2">Classes</h1>
+                <p class="data" style="display: none;"><%- JSON.stringify(classes) %></p>
+                <div class="mt-5 h-full float-left -ml-10 overflow-auto">
+                    <input type="text" id="searchInput" onkeyup="searchTable()" class="p-2 rounded my-4 w-4/5"
+                        placeholder="Search using class name">
+                    <table id="classes" class="display overflow-auto" style="max-height: 640px !important;"
+                        cellspacing="0">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    constructTable(JSON.parse($('.data').html()), '#classes')
+
+    function constructTable(list, selector) {
+        $(selector).html("")
+        // Getting the all column names
+        var cols = Headers(list, selector);
+
+        // Traversing the JSON data
+        for (var i = 0; i <
+            list.length; i++) {
+            var row = $('<tr />');
+            for (var colIndex = 0; colIndex <
+                cols.length; colIndex++) {
+                var val = list[i][cols[colIndex]]; // If there is any key, which is matching // with the column name
+                if (val == null) val = "";
+                row.append($('<td />').html(val));
+            }
+
+            // Adding each row to the table
+            $(selector).append(row);
+        }
+    }
+
+    function Headers(list, selector) {
+        var columns = [];
+        var header = $(' <tr / > ');
+
+            for (var i = 0; i <
+                list.length; i++) {
+                var row = list[i];
+                for (var k in row) {
+                    if ($.inArray(k, columns) == -1) {
+                        columns.push(k); 
+                        //Creating the header 
+                        header.append($('<th />').html(k));
+                    }
+                }
+            }
+
+            // Appending the header to the table
+            $(selector).append(header);
+            return columns;
+        }
+
+        function searchTable() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("classes");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent ||
+                        td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+</script>
